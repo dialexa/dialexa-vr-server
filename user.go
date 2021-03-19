@@ -3,9 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
+
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
-	"strings"
 )
 
 type Vector3 struct {
@@ -15,12 +16,14 @@ type Vector3 struct {
 }
 
 type User struct {
-	id     string
-	Name   string
-	Pos    Vector3
-	Rot    Vector3
-	Active bool
-	conn   *websocket.Conn
+	id          string
+	Name        string
+	Pos         Vector3
+	Rot         Vector3
+	Active      bool
+	LaserPos    Vector3
+	LaserActive bool
+	conn        *websocket.Conn
 }
 
 func NewUser(name string, conn *websocket.Conn) *User {
@@ -30,6 +33,8 @@ func NewUser(name string, conn *websocket.Conn) *User {
 		Pos:    Vector3{X: 0, Y: 0, Z: 0},
 		Rot:    Vector3{X: 0, Y: 0, Z: 0},
 		Active: true,
+		LaserPos: Vector3{X: 0, Y: 0, Z: 0},
+		LaserActive: false,
 		conn:   conn,
 	}
 }
@@ -46,6 +51,14 @@ func (u *User) HandleMessage(message string) {
 			var rot Vector3
 			json.Unmarshal([]byte(cmd[1]), &rot)
 			u.Rot = rot
+		case "laserActive":
+			var laserActive bool
+			json.Unmarshal([]byte(cmd[1]), &laserActive)
+			u.LaserActive = laserActive
+		case "laserPos":
+			var laserPos Vector3
+			json.Unmarshal([]byte(cmd[1]), &laserPos)
+			u.LaserPos = laserPos
 		}
 	}
 }
