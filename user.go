@@ -52,9 +52,8 @@ func (u *User) HandleMessage(message string) {
 			json.Unmarshal([]byte(cmd[1]), &rot)
 			u.Rot = rot
 		case "laserActive":
-			var laserActive bool
-			json.Unmarshal([]byte(cmd[1]), &laserActive)
-			u.LaserActive = laserActive
+			var laserActiveBool bool = cmd[1] == "true"
+			u.LaserActive = laserActiveBool
 		case "laserPos":
 			var laserPos Vector3
 			json.Unmarshal([]byte(cmd[1]), &laserPos)
