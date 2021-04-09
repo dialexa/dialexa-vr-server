@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/google/uuid"
 	"strings"
+
+	"github.com/google/uuid"
 )
 
 type Room struct {

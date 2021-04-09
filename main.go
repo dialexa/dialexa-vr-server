@@ -3,12 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
-	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
+	"github.com/gorilla/websocket"
 )
 
 var addr = flag.String("addr", "0.0.0.0:8080", "http service address")
@@ -49,7 +50,7 @@ func health(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fmt.Println("Listening on port 8080")
+	fmt.Println("Listening on port 8080.")
 
 	room = NewRoom()
 	go broadcastLoop()
